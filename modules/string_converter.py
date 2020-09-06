@@ -40,6 +40,9 @@ class StringConverter:
 	def find_dot(self):
 		appered_dot = False
 		origin = 0
+		if self.get_char() == '.':
+			raise SyntaxError('You cannot place a dot in the first digit.')
+
 		while self.is_eof() == False:
 			c = self.consume_char()
 			if c != '.':
