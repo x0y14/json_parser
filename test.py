@@ -1,54 +1,59 @@
-from json_parser_final import *
+from json_parser import *
 
 
-# parser = Parser(
-# 	raw='''{ "this is key" : "this is value" }'''
-# )
-# result = parser.parse()
-# assert(result.key.data == 'this is key')
-# assert(result.value.value_type == JsonValueType.String)
-# assert(result.value.data == 'this is value')
-# print('test_String: passed')
+# result = Parser(
+# 	raw='''{ "this is key" : -500 }'''
+# 	).parse()
+
+# for r in result:
+# 	print(r.key.data)
+# 	print(r.value.data)
 
 
-# parser = Parser(
-# 	raw='''{ "this is key" : 1234 }'''
-# )
-# result = parser.parse()
-# assert(result.key.data == 'this is key')
-# assert(result.value.value_type == JsonValueType.Number)
-# assert(result.value.data == 1234)
-# print('test_Number: passed')
+
+# result = Parser(
+# 	raw='''{ "its key" : "its value" }'''
+# 	).parse()
+# print('result: ', vars(result[0]))
+
+# result = Parser(
+# 	raw='''{ "its key" : true }'''
+# 	).parse()
+# print('result: ', vars(result[0]))
 
 
-# parser = Parser(
-# 	raw='''{ "this is key" : true }'''
-# )
-# result = parser.parse()
-# assert(result.key.data == 'this is key')
-# assert(result.value.value_type == JsonValueType.Boolen)
-# assert(result.value.data == True)
-# print('test_Boolen: passed')
+
+# result = Parser(
+# 	raw='''{ "its key" : { "inJson" : "Hello" } }'''
+# 	).parse()
+# print('result: ', vars(result[0]))
 
 
-# parser = Parser(
-# 	raw='''{ "this is key" : { "second": 2 } }'''
-# )
-# result = parser.parse()
-# assert(result.key.data == 'this is key')
-# assert(result.value.key.data == 'second')
-# assert(result.value.value.value_type == JsonValueType.Number)
-# assert(result.value.value.data == 2)
-# print('test_inJson: passed')
 
-parser = Parser(
-	# raw='''{ "this is key" : "this is value", "sec": "2" }'''
-	raw='''{ "this is key" : "this is value" }'''
+# result = Parser(
+# 	raw='''{ "its key" : [12, 34, 56] }'''
+# 	).parse()
+# print('result: ', vars(result[0]))
 
-)
-result = parser.parse()
 
-print(result)
-# print(result.key.data)
-# for i in result.value:
-	# print(vars(i))
+
+# result = Parser(
+# 	raw='''{ "its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]] }'''
+# 	).parse()
+
+# for r in result:
+# 	print(f'=== [{r.key.data}] ===')
+# 	# print(r.value.data)
+# 	for l in r.value.data:
+# 		# print(type(l))
+# 		if type(l) is JsonValue:
+# 			print(f'\t- {l.data}')
+# 		elif type(l) is Json:
+
+
+
+# result = Parser(
+# 	raw='''{ "its key" : "hi", "sec": 2}'''
+# 	).parse()
+# print('result: ', vars(result[0]))
+

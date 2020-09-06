@@ -94,7 +94,10 @@ class StringConverter:
 		if self.minus == True:
 			i *= -1
 		
-		return i
+		if self.is_float == False:
+			return int(i), False
+		else:
+			return i, True
 
 
 # st = StringConverter(
