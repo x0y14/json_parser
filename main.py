@@ -1,4 +1,4 @@
-from json_parser_v2 import *
+from json_parser_final import *
 
 
 parser = Parser(

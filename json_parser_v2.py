@@ -1,6 +1,7 @@
 import re
 import enum
 
+
 class JsonKey:
 	def __init__(self, data):
 		self.data = data
