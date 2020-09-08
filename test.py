@@ -1,59 +1,26 @@
 from json_parser import *
 
 
-result = Parser(
-	raw='''{ "this is key" : -500 }'''
-	).parse()
+assert(
+	Parser(raw='''{ "num" : -500 }''').parse() == {'num': -500})
 
-for r in result:
-	print(r.key.data)
-	print(r.value.data)
+assert(
+	Parser(raw='''{"hello" : "world" }''').parse() == {'hello': 'world'})
 
+assert(
+	Parser(raw='''{ "bool" : true}''').parse() == {'bool': True})
 
+assert(
+	Parser(raw='''{ "bool" : false }''').parse() == {'bool': False})
 
-# result = Parser(
-# 	raw='''{ "its key" : "its value" }'''
-# 	).parse()
-# print('result: ', vars(result[0]))
+assert(
+	Parser(raw='''{ "list" : [0, "zero", true] }''').parse() == {'list': [0, 'zero', True]})
 
-# result = Parser(
-# 	raw='''{ "its key" : true }'''
-# 	).parse()
-# print('result: ', vars(result[0]))
+assert(
+	Parser(raw='''{ "dict" : {"d2": 2} }''').parse() == {'dict': {'d2': 2}})
 
+assert(
+	Parser(raw='''{ "one" : 1, "two": 2 }''').parse() == {'one': 1, 'two': 2})
 
-
-# result = Parser(
-# 	raw='''{ "its key" : { "inJson" : "Hello" } }'''
-# 	).parse()
-# print('result: ', vars(result[0]))
-
-
-
-# result = Parser(
-# 	raw='''{ "its key" : [12, 34, 56] }'''
-# 	).parse()
-# print('result: ', vars(result[0]))
-
-
-
-# result = Parser(
-# 	raw='''{ "its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]] }'''
-# 	).parse()
-
-# for r in result:
-# 	print(f'=== [{r.key.data}] ===')
-# 	# print(r.value.data)
-# 	for l in r.value.data:
-# 		# print(type(l))
-# 		if type(l) is JsonValue:
-# 			print(f'\t- {l.data}')
-# 		elif type(l) is Json:
-
-
-
-# result = Parser(
-# 	raw='''{ "its key" : "hi", "sec": 2}'''
-# 	).parse()
-# print('result: ', vars(result[0]))
-
+assert(
+	Parser(raw='''{ "www" : [0, {"kkk": true}, {"haha": {"h1": "haha"}}] }''').parse() == {"www": [0, {"kkk": True}, {"haha": {"h1": "haha"}}] })

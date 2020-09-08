@@ -4,4 +4,4 @@ parser = Parser(
 	raw='''{ "its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]], "sec": "909090"}'''
 )
 result = parser.parse()
-# assert(result == {"its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]], "sec": "909090"})
+print(result)
