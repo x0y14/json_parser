@@ -1,13 +1,13 @@
 from json_parser import *
 
 
-# result = Parser(
-# 	raw='''{ "this is key" : -500 }'''
-# 	).parse()
+result = Parser(
+	raw='''{ "this is key" : -500 }'''
+	).parse()
 
-# for r in result:
-# 	print(r.key.data)
-# 	print(r.value.data)
+for r in result:
+	print(r.key.data)
+	print(r.value.data)
 
 
 

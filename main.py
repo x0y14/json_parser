@@ -1,8 +1,7 @@
-from json_parser_final import *
-
+from json_parser import *
 
 parser = Parser(
-	raw='''{ "this is key" : "this is value" }'''
+	raw='''{ "its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]], "sec": "909090"}'''
 )
 result = parser.parse()
-print(vars(result))
+# assert(result == {"its key" : [12, 34, 56, { "inList": "Hi" }, ["hello", "hi", "good night"]], "sec": "909090"})

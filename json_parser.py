@@ -1,30 +1,35 @@
-import enum
+# import enum
 from modules.string_converter import StringConverter
 
-class JsonKey:
-	def __init__(self, data):
-		self.data = data
-		super().__init__()
+# class JsonKey:
+# 	def __init__(self, data):
+# 		self.data = data
+# 		super().__init__()
 
-class JsonValueType(enum.Enum):
-	String = enum.auto()
-	Boolen = enum.auto()
-	Int = enum.auto()
-	Float = enum.auto()
-	List = enum.auto()
-	Json = enum.auto()
+# class JsonValueType(enum.Enum):
+# 	String = enum.auto()
+# 	Boolen = enum.auto()
+# 	Int = enum.auto()
+# 	Float = enum.auto()
+# 	List = enum.auto()
+# 	Json = enum.auto()
 
-class JsonValue:
-	def __init__(self, value_type, data):
-		self.data = data
-		self.value_type = value_type
-		super().__init__()
+# class JsonKapsel:
+# 	def __init__(self, data):
+# 		self.data = data
+# 		super().__init__()
 
-class Json:
-	def __init__(self, key, value):
-		self.key = key
-		self.value = value
-		super().__init__()
+# class JsonValue:
+# 	def __init__(self, value_type, data):
+# 		self.data = data
+# 		self.value_type = value_type
+# 		super().__init__()
+
+# class Json:
+# 	def __init__(self, key, value):
+# 		self.key = key
+# 		self.value = value
+# 		super().__init__()
 
 
 class Parser:
@@ -71,12 +76,12 @@ class Parser:
 				self.consume_char()
 				continue
 			else:
-				return
+				return 0
 	
 	def find_value(self):
 		value_end = [',', ' ', '}', ']']
 		self.consume_whilespace()
-		# print(self.get_char())
+
 		# int
 		if self.get_char() in ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
 			data = self.consume_while(value_end)
@@ -84,61 +89,78 @@ class Parser:
 
 			self.consume_whilespace()
 			if is_float:
-				return JsonValue(JsonValueType.Float, int_data)
+				# return JsonValue(JsonValueType.Float, int_data)
+				return int_data
 
-			return JsonValue(JsonValueType.Int, int_data)
+			# return JsonValue(JsonValueType.Int, int_data)
+			return int_data
 
 		# str
 		elif self.get_char()  == '"':
 			self.consume_char()
 			data = self.go_to('"')
 			self.consume_char()
-			return JsonValue(JsonValueType.String, data)
+			# return JsonValue(JsonValueType.String, data)
+			# print(data)
+			return data
 		
 		# boolen
 		elif self.get_char() in ['t', 'f']:
 			data = self.consume_while(value_end)
 			if data == 'true':
-
 				self.consume_char()
-				# self.consume_whilespace()
+				# return JsonValue(JsonValueType.Boolen, True)
+				return True
 
-				return JsonValue(JsonValueType.Boolen, True)
 			elif data == 'false':
-
 				self.consume_char()
-				# self.consume_whilespace()
+				# return JsonValue(JsonValueType.Boolen, False)
+				return False
 
-				return JsonValue(JsonValueType.Boolen, False)
 			else:
 				raise SyntaxError('Unknown Object')
 		
 		elif self.get_char() == '{':
 			data = self.parse()
-			return JsonValue(JsonValueType.Json, data)
+			# return JsonValue(JsonValueType.Json, data)
+			# print(data)
+			return data
 
 		elif self.get_char() == '[':
 			values = []
 			self.consume_char()
 			while self.is_eof() == False:
 				v = self.find_value()
-				# print('[LIST]:', v)
 				values.append(v)
 				if self.get_char() in [',', '"', "}"]:
 					self.consume_char()
 					continue
 				elif self.get_char() == ']':
 					self.consume_char()
-					return JsonValue(JsonValueType.List, values)
+					# return JsonValue(JsonValueType.List, values)
+					# print(values)
+					return values
 				else:
 					raise SyntaxError(f'[Pannic]: {self.get_char()}')
-		
 		else:
 			raise SyntaxError(f'[Pannic]: {self.get_char()}')
+	
+	# def kapsel_check(self, list_):
+	# 	# pass
+	# 	n = 0
+	# 	for i in list_:
+	# 		print(i)
+	# 		n += 1
+	# 	print(n)
+	# 	if n == 1:
+	# 		return list_[0]
+	# 	else:
+	# 		list_
 
 	def parse(self):
-		result = []
+		result = {}
 		while self.is_eof() == False:
+			# print(result)
 
 			if self.get_char() == '{':
 				self.consume_char()
@@ -147,6 +169,7 @@ class Parser:
 			self.consume_whilespace()
 			assert(self.get_char() == '"'); self.consume_char()# hit and go next
 			key = self.go_to('"'); self.consume_char()# hit and go next
+
 			# find `:`
 			self.consume_whilespace()
 			assert(self.get_char() == ':')# hit
@@ -157,11 +180,17 @@ class Parser:
 
 			# self.consume_char()
 			self.consume_whilespace()
-			result.append(Json(JsonKey(key), value))
+			# result.append(Json(JsonKey(key), value))
+			# result.append({key: value})
+			result[key] = value
 
 			if self.get_char() == '}':
 				self.consume_char()# 忘れがち, Noneが出てきたらだいたいこれし忘れ。
+				# print(result)
+				# return self.kapsel_check(result)
 				return result
+				# return JsonKapsel(result)
+				# return Json(JsonValueType.List, result)
 
 			elif self.get_char() == ',':
 				self.consume_char()
