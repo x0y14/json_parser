@@ -1,5 +1,7 @@
-from json_parser import *
+from json_parser import Parser
 
+assert(
+	Parser(raw='''{ "num" : -500 }''').parse() == {'num': -500})
 
 assert(
 	Parser(raw='''{ "num" : -500 }''').parse() == {'num': -500})
@@ -24,3 +26,6 @@ assert(
 
 assert(
 	Parser(raw='''{ "www" : [0, {"kkk": true}, {"haha": {"h1": "haha"}}] }''').parse() == {"www": [0, {"kkk": True}, {"haha": {"h1": "haha"}}] })
+
+
+print('pass the test.')

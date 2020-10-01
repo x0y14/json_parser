@@ -21,7 +21,6 @@ class Parser:
 	def go_to(self, char):
 		# 指定した文字まで吹っ飛ぶ、そこまでで得た文字を返す。ex) raw=hello, go_to("o"): return -> "hell"
 		consumed = ''
-
 		while self.is_eof() == False:
 			if self.get_char() == char:
 				return consumed
@@ -68,7 +67,7 @@ class Parser:
 			data = self.go_to('"')
 			self.consume_char()
 			return data
-		
+
 		# boolen
 		elif self.get_char() in ['t', 'f']:
 			data = self.consume_while(value_end)
@@ -79,7 +78,7 @@ class Parser:
 				return False
 
 			else:
-				raise SyntaxError(f'Unknown Object: {data}')
+				raise SyntaxError(f'[Unknown Object]: {data}')
 		
 		elif self.get_char() == '{':
 			data = self.parse()
@@ -98,9 +97,9 @@ class Parser:
 					self.consume_char()
 					return values
 				else:
-					raise SyntaxError(f'[Pannic]: {self.get_char()}')
+					raise SyntaxError(f'[Unpack Objeckt]: {self.get_char()}')
 		else:
-			raise SyntaxError(f'[Pannic]: {self.get_char()}')
+			raise SyntaxError(f'[Unpack Objeckt]: {self.get_char()}')
 	
 	def parse(self):
 		result = {}
@@ -112,7 +111,12 @@ class Parser:
 
 			# find `key`
 			self.consume_whilespace()
+			
+			if self.get_char() == '}':
+				return {}
+
 			assert(self.get_char() == '"'); self.consume_char()# hit and go next
+
 			key = self.go_to('"'); self.consume_char()# hit and go next
 
 			# find `:`
@@ -136,5 +140,5 @@ class Parser:
 				continue
 			
 			else:
-				raise SyntaxError(f'Unknown Object: {self.get_char()}')
+				raise SyntaxError(f'[Unknown Object]: {self.get_char()}')
 
